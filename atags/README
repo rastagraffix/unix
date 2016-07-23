@@ -13,13 +13,3 @@ The latest release of this software can be found at
 	ftp://orthanc.ca/unix/atags/
 
 Please send bug reports to <lyndon@orthanc.ca>.
-
-Information about acme and the plumber is available from:
-
-  http://plan9.bell-labs.com/magic/man2html/1/acme
-  http://plan9.bell-labs.com/magic/man2html/6/plumb
-  http://plan9.bell-labs.com/sys/doc/acme/acme.pdf
-  http://plan9.bell-labs.com/sys/doc/plumb.pdf
-
-Russ Cox has ported many of these tools to UNIX. See
-http://swtch.com/plan9port for the details.
