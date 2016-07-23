@@ -6,8 +6,7 @@ file, which now features a search field syntax compatible with the
 plumber.  Tags file output formats unrelated to that environment
 have been removed.
 
-This source releaase assumes a 44BSD-ish environment.  A portable
-version is in the works.
+This source release assumes a 44BSD-ish compilation environment.
 
 The latest release of this software can be found at
 
