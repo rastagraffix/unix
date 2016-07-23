@@ -1,0 +1,28 @@
+A simple backup script for BSD systems.
+
+Run "backup" out of cron on the machines to be dumped.
+
+Install "rbackup" on the machine that will store the dumps.
+
+Generate an SSH key pair for use by the dump scripts. Install the
+private part of the key on the machines running the backup scripts,
+and put the public key on the machine hosting the dumps. The public
+key should be prefixed with 'command=/path/to/rbackup' to restrict
+it to only running the rbackup script. The private key files must
+not have a password if you intend to run them from cron.
+
+The backup script will dump all the local UFS filesystems. It
+honours the nodump flag at all dump levels. The script maintains a
+four week rotation of weekly dump cycles. This gives you a running
+four week window of full weekly dumps to fall back on. You can
+change this by setting $cycles to the number of weeks to keep around.
+Things will get weird if $cycles > 52.
+
+Neither of the scripts need run as the superuser. The "backup"
+script requires read access to the raw disk device, easily achieved
+by running it under an account in the "operator" group. You will
+also have to create the $dumpdates directory, and ensure the account
+running the "backup" script has write access there.
+
+Finally, you must edit the backup script to set the $dumphost and $key
+variables to match your setup.

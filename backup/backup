@@ -1,0 +1,32 @@
+#!/bin/sh
+PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin; export PATH
+
+trap 'echo $0: aborting >&2; exit 1' 2
+
+# CHANGE THESE:
+key=~me/.ssh/backup
+dhost=dumphost.example.com
+
+host=`hostname`
+cycles=4
+week=`date +%U`
+seq=`echo $week % $cycles | bc`
+dumpdates=/var/db/backup/dumpdates.${seq}
+l=$1
+if [ -z "$l" ] ; then
+	l=`date +%w`
+fi
+echo dumping sequence ${seq} at level $l
+
+fs=`df -nt ufs|awk '$1 ~ /^\// {print $6}'`
+
+for i in ${fs}; do
+	dev=`df ${i} | tail -1 | awk '{print $1}'`
+	if [ "${i}" = "/" ] ; then
+		name="root"
+	else
+		name=`echo ${i} | sed -e 's;^/;;' -e 's;/;_;g'`
+	fi
+	(echo ${host} ${name} ${seq} ${l}; dump -D ${dumpdates} -$l -Lau -h 0 -f - ${dev} | gzip)\
+		 | ssh -i ${key} ${dhost} /usr/local/libexec/rbackup
+done

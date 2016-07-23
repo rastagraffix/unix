@@ -1,0 +1,26 @@
+atags is derived from FreeBSD-10.0's ctags(1).
+
+This is a stripped down ctags, intended for use with the Plan 9
+acme editor.  The primary difference is the format of the atags
+file, which now features a search field syntax compatible with the
+plumber.  Tags file output formats unrelated to that environment
+have been removed.
+
+This source releaase assumes a 44BSD-ish environment.  A portable
+version is in the works.
+
+The latest release of this software can be found at
+
+	ftp://orthanc.ca/unix/atags/
+
+Please send bug reports to <lyndon@orthanc.ca>.
+
+Information about acme and the plumber is available from:
+
+  http://plan9.bell-labs.com/magic/man2html/1/acme
+  http://plan9.bell-labs.com/magic/man2html/6/plumb
+  http://plan9.bell-labs.com/sys/doc/acme/acme.pdf
+  http://plan9.bell-labs.com/sys/doc/plumb.pdf
+
+Russ Cox has ported many of these tools to UNIX. See
+http://swtch.com/plan9port for the details.

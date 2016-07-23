@@ -1,0 +1,16 @@
+.TH INVERT 1 "December 30, 2012"
+.SH NAME
+invert \- print text lines in reversed order
+.SH SYNOPSIS
+.B invert
+.SH DESCRIPTION
+.B invert
+consumes a stream of text lines from the standard input, then disgorges
+them to the standard output in the reversed order of which they were read.
+.PP
+The maximum size of the input stream is determined by the capacity
+of
+.BR sed 's
+hold space.
+.SH "SEE ALSO"
+.IR sed (1)

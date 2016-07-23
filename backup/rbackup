@@ -1,0 +1,12 @@
+#!/bin/sh
+
+read host name seq level
+
+host=`echo ${host} | sed -e 's/&;//g'`
+name=`echo ${name} | sed -e 's/&;//g'`
+seq=`echo ${seq} | sed -e 's/&;//g'`
+level=`echo ${level} | sed -e 's/&;//g'`
+
+dpath=/u/dumps/${host}/${seq}.${name}.${level}
+
+cat > ${dpath}
