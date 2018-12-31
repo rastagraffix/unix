@@ -31,18 +31,13 @@
 static const char copyright[] =
 "@(#) Copyright (c) 1987, 1993, 1994, 1995\n\
 	The Regents of the University of California.  All rights reserved.\n";
-#endif
-
-#if 0
-#ifndef lint
 static char sccsid[] = "@(#)ctags.c	8.4 (Berkeley) 2/7/95";
-#endif
+static char fbsdid[] = "$FreeBSD: release/10.0.0/usr.bin/ctags/ctags.c 216370 2010-12-11 08:32:16Z joel $";
 #endif
 
 #include <sys/cdefs.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-__FBSDID("$FreeBSD: release/10.0.0/usr.bin/ctags/ctags.c 216370 2010-12-11 08:32:16Z joel $");
 
 #include <err.h>
 #include <limits.h>
@@ -71,14 +66,11 @@ long	lineftell;		/* ftell after getc( inf ) == '\n' */
 
 int	lineno;			/* line number of current line */
 int	dflag;			/* -d: non-macro defines */
+int	qflag;			/* -q: suppress warnings */
 int	tflag;			/* -t: create tags for typedefs */
 int	vflag;			/* -v: vgrind style index output */
-int	wflag;			/* -w: suppress warnings */
 
 char	*curfile;		/* current input file name */
-#ifdef SEARCH
-char	searchar = '/';		/* use /.../ searches by default */
-#endif
 char	lbuf[LINE_MAX];
 
 void	init(void);
@@ -88,43 +80,31 @@ static void usage(void);
 int
 main(int argc, char **argv)
 {
-	static const char	*outfile = "atags";	/* output file */
-	int	exit_val;			/* exit value */
-	int	step;				/* step through args */
-	int	ch;				/* getopts char */
+	const char	*outfile = "ATAGS";	/* output file */
+	int		exit_val;		/* exit value */
+	int		step;			/* step through args */
+	int		ch;			/* getopts char */
 
-	setlocale(LC_ALL, "");
+	setlocale(LC_ALL, "C");
 
-	tflag = YES;
-	while ((ch = getopt(argc, argv, "BFTadf:tuwvx")) != -1)
+	dflag = qflag = tflag = vflag = 0;
+	while ((ch = getopt(argc, argv, "df:qtv")) != -1)
 		switch(ch) {
-		case 'B':
-#ifdef SEARCH
-			searchar = '?';
-#endif
-			break;
-		case 'F':
-#ifdef SEARCH
-			searchar = '/';
-#endif
-			break;
-		case 'T':
-			tflag = NO;
-			break;
 		case 'd':
 			dflag++;
 			break;
 		case 'f':
 			outfile = optarg;
 			break;
-		case 't':
-			tflag = YES;
+		case 'q':
+			qflag++;
 			break;
-		case 'w':
-			wflag++;
+		case 't':
+			tflag++;
 			break;
 		case 'v':
 			vflag++;
+			break;
 		case '?':
 		default:
 			usage();
@@ -161,7 +141,7 @@ main(int argc, char **argv)
 static void
 usage(void)
 {
-	(void)fprintf(stderr, "usage: ctags [-BFTaduwvx] [-f tagsfile] file ...\n");
+	(void)fprintf(stderr, "usage: ctags [-dqtv] [-f tagsfile] file ...\n");
 	exit(1);
 }
 

@@ -27,20 +27,15 @@
  * SUCH DAMAGE.
  */
 
-#if 0
 #ifndef lint
 static char sccsid[] = "@(#)print.c	8.3 (Berkeley) 4/2/94";
+static char fbsdid[] = "$FreeBSD: release/10.0.0/usr.bin/ctags/print.c 216370 2010-12-11 08:32:16Z joel $";
 #endif
-#endif
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: release/10.0.0/usr.bin/ctags/print.c 216370 2010-12-11 08:32:16Z joel $");
 
 #include <limits.h>
 #include <stdio.h>
 #include <unistd.h>
 
-#include "atags.h"
 #include "atags.h"
 
 /*
@@ -70,18 +65,7 @@ inputline(void)
 			*cp++ = '\\'; *cp++ = '\\';
 			++cnt;
 		}
-#ifdef SEARCH
-		else if (c == (int)searchar) {	/* search character */
-			if (cnt > ENDLINE - 2)
-				break;
-			*cp++ = '\\'; *cp++ = c;
-			++cnt;
-		}
-#endif
 		else if (c == '\n') {	/* end of keep */
-#ifdef SEARCH
-			*cp++ = '$';		/* can find whole line */
-#endif
 			break;
 		}
 		else
@@ -108,13 +92,10 @@ put_entries(NODE *node)
 		printf("%s %s %d\n",
 		    node->entry, node->file, (node->lno + 63) / 64);
 	else
-#ifdef SEARCH
-		fprintf(outf, "%22s\t%22s:%d\t%c^%s%c\n",
-		    node->entry, node->file, node->lno, searchar, node->pat, searchar);
-#else
-		fprintf(outf, "%22s\t%22s:%d\t%.20s\n",
-		    node->entry, node->file, node->lno, node->pat);
-#endif
+		fprintf(outf, "%-20s\t%s:%d  \t%.20s\n",
+		   node->entry, node->file, node->lno, node->pat);
+		//fprintf(outf, "%36s\t%s:%d\n",
+		//    node->entry, node->file, node->lno);
 	if (node->right)
 		put_entries(node->right);
 }

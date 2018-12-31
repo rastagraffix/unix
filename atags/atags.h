@@ -77,15 +77,12 @@ extern FILE    *outf;			/* ioptr for current output file */
 extern long	lineftell;		/* ftell after getc( inf ) == '\n' */
 extern int	lineno;			/* line number of current line */
 extern int	dflag;			/* -d: non-macro defines */
+extern int	qflag;			/* -q: suppress warnings */
 extern int	tflag;			/* -t: create tags for typedefs */
 extern int	vflag;			/* -v: vgrind style index output */
-extern int	wflag;			/* -w: suppress warnings */
 extern bool	_wht[], _etk[], _itk[], _btk[], _gd[];
 extern char	lbuf[LINE_MAX];
 extern char    *lbp;
-#ifdef SEARCH
-extern char	searchar;		/* ex search character */
-#endif
 
 extern int	cicmp(const char *);
 extern void	inputline(void);

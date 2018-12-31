@@ -27,14 +27,10 @@
  * SUCH DAMAGE.
  */
 
-#if 0
 #ifndef lint
 static char sccsid[] = "@(#)tree.c	8.3 (Berkeley) 4/2/94";
+static char fbsdid[] = "$FreeBSD: release/10.0.0/usr.bin/ctags/tree.c 216370 2010-12-11 08:32:16Z joel $";
 #endif
-#endif
-
-#include <sys/cdefs.h>
-__FBSDID("$FreeBSD: release/10.0.0/usr.bin/ctags/tree.c 216370 2010-12-11 08:32:16Z joel $");
 
 #include <err.h>
 #include <limits.h>
@@ -42,7 +38,6 @@ __FBSDID("$FreeBSD: release/10.0.0/usr.bin/ctags/tree.c 216370 2010-12-11 08:32:
 #include <stdlib.h>
 #include <string.h>
 
-#include "atags.h"
 #include "atags.h"
 
 static void	add_node(NODE *, NODE *);
@@ -100,12 +95,12 @@ add_node(NODE *node, NODE *cur_node)
 	dif = strcoll(node->entry, cur_node->entry);
 	if (!dif) {
 		if (node->file == cur_node->file) {
-			if (!wflag)
+			if (!qflag)
 				fprintf(stderr, "Duplicate entry in file %s, line %d: %s\nSecond entry ignored\n", node->file, lineno, node->entry);
 			return;
 		}
 		if (!cur_node->been_warned)
-			if (!wflag)
+			if (!qflag)
 				fprintf(stderr, "Duplicate entry in files %s and %s: %s (Warning only)\n", node->file, cur_node->file, node->entry);
 		cur_node->been_warned = YES;
 	}

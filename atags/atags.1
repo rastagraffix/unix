@@ -28,27 +28,29 @@
 .\"     @(#)ctags.1	8.1 (Berkeley) 6/6/93
 .\" $FreeBSD: release/10.0.0/usr.bin/ctags/ctags.1 216370 2010-12-11 08:32:16Z joel $
 .\"
-.Dd September 30, 2014
+.Dd December 31. 2018
 .Dt ATAGS 1
 .Os "Orthanc Systems"
 .Sh NAME
 .Nm atags
-.Nd create a
-.Pa tags
+.Nd create an
+acme
+tags
 file
 .Sh SYNOPSIS
 .Nm
-.\" .Op Fl BFTdwv
-.Op Fl Tdwv
+.Op Fl dqtv
 .Op Fl f Ar tagsfile
 .Ar
 .Sh DESCRIPTION
 The
 .Nm
 utility makes a
-.Pa tags
-file for
+tags
+file,
+suitable for
 .Xr acme 1
+and the Plan\ 9 plumber,
 from the specified C,
 Fortran,
 lex,
@@ -59,11 +61,12 @@ A tags file gives the locations of specified objects in a group of files.
 Each line of the tags file contains the object name,
 the file and line number
 at which it
-is defined, and a search pattern for the object definition.
+is defined,
+and an initial snippet of the source file definition of the object.
 Using the
-.Pa tags
+tags
 file,
-.Xr acme 1
+.Sy acme
 can quickly locate these object definitions.
 Depending upon the options provided to
 .Nm ,
@@ -72,14 +75,6 @@ enums and unions.
 .Pp
 The following options are available:
 .Bl -tag -width indent
-.\"	These options are currently no-ops:
-."	.It Fl B
-."	Use backward searching patterns
-."	.Pq Li ?...? .
-."	.It Fl F
-."	Use forward searching patterns
-."	.Pq Li /.../
-."	(the default).
 .It Fl d
 Create tags for
 .Li #defines
@@ -90,9 +85,11 @@ that take arguments are tagged automatically.
 Place the tag descriptions in a file called
 .Ar tagsfile .
 The default behaviour is to place them in a file called
-.Pa atags .
-.It Fl T
-Do not create tags for typedefs, structs, unions, and enums.
+.Pa ATAGS .
+.It Fl q
+Suppress warning diagnostics.
+.It Fl t
+Create tags for typedefs, structs, unions, and enums.
 .It Fl v
 An index of the form expected by
 .Xr vgrind 1
@@ -105,11 +102,9 @@ it may be desired to run the output through
 .Xr sort 1 .
 E.g.:
 .Bd -literal -offset indent
-ctags -v files | sort -f > index
+atags -v files | sort -f > index
 vgrind -x index
 .Ed
-.It Fl w
-Suppress warning diagnostics.
 .El
 .Pp
 Files whose names end in
@@ -170,9 +165,9 @@ the second section of the
 .Xr lex 1
 file.
 .Sh FILES
-.Bl -tag -width ".Pa atags" -compact
-.It Pa atags
-default output tags file
+.Bl -tag -compact
+.It Pa ATAGS
+The default tags file
 .El
 .Sh EXIT STATUS
 The
@@ -182,6 +177,7 @@ Duplicate objects are not considered errors.
 .Sh SEE ALSO
 .Xr acme 1 ,
 .Xr ctags 1
+.Pp
 .Sh BUGS
 Recognition of functions, subroutines and procedures
 for Fortran and Pascal is done in a very simpleminded way.
