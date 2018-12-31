@@ -88,7 +88,7 @@ extern char	searchar;		/* ex search character */
 #endif
 
 extern int	cicmp(const char *);
-extern void	getline(void);
+extern void	inputline(void);
 extern void	pfnote(const char *, int);
 extern int	skip_key(int);
 extern void	put_entries(NODE *);

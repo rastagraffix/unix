@@ -44,12 +44,12 @@ __FBSDID("$FreeBSD: release/10.0.0/usr.bin/ctags/print.c 216370 2010-12-11 08:32
 #include "atags.h"
 
 /*
- * getline --
+ * inputline --
  *	get the line the token of interest occurred on,
  *	prepare it for printing.
  */
 void
-getline(void)
+inputline(void)
 {
 	long	saveftell;
 	int	c;
@@ -109,10 +109,10 @@ put_entries(NODE *node)
 		    node->entry, node->file, (node->lno + 63) / 64);
 	else
 #ifdef SEARCH
-		fprintf(outf, "%s\t%s:%d\t%c^%s%c\n",
+		fprintf(outf, "%22s\t%22s:%d\t%c^%s%c\n",
 		    node->entry, node->file, node->lno, searchar, node->pat, searchar);
 #else
-		fprintf(outf, "%s\t%s:%d\t%s\n",
+		fprintf(outf, "%22s\t%22s:%d\t%.20s\n",
 		    node->entry, node->file, node->lno, node->pat);
 #endif
 	if (node->right)

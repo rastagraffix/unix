@@ -125,7 +125,7 @@ PF_funcs(void)
 			continue;
 		*cp = EOS;
 		(void)strlcpy(tok, lbp, sizeof(tok));	/* possible trunc */
-		getline();			/* process line for ex(1) */
+		inputline();			/* process line for ex(1) */
 		pfnote(tok, lineno);
 		pfcnt = YES;
 	}

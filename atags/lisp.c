@@ -100,7 +100,7 @@ l_entries(void)
 		*cp = EOS;
 		(void)strlcpy(tok, lbp, sizeof(tok));	/* possible trunc */
 		*cp = savedc;
-		getline();
+		inputline();
 		pfnote(tok, lineno);
 	}
 	/*NOTREACHED*/
