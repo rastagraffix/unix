@@ -7,9 +7,7 @@ plumber.  Tags file output formats unrelated to that environment
 have been removed.
 
 This source release assumes a 44BSD-ish compilation environment.
-
-The latest release of this software can be found at
-
-	ftp://orthanc.ca/unix/atags/
+Specifically, a 4.4BSD bmake environment.  A Pure ANSI C build
+with POSIX makefiles will follow at some point.
 
 Please send bug reports to <lyndon@orthanc.ca>.
