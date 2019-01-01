@@ -35,14 +35,8 @@ static char sccsid[] = "@(#)ctags.c	8.4 (Berkeley) 2/7/95";
 static char fbsdid[] = "$FreeBSD: release/10.0.0/usr.bin/ctags/ctags.c 216370 2010-12-11 08:32:16Z joel $";
 #endif
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-
 #include <err.h>
 #include <limits.h>
-#include <locale.h>
-#include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -154,32 +148,44 @@ usage(void)
  *	by default and then the elements subscripted by the chars in
  *	CWHITE are set to YES.  Thus, "_wht" of a char is YES if it is in
  *	the string CWHITE, else NO.
+ *
+ *	XXX Not at all utf8 aware.
  */
 void
 init(void)
 {
-	int		i;
-	const unsigned char	*sp;
+	int	i;
+	char	*sp;
 
 	for (i = 0; i < 256; i++) {
 		_wht[i] = _etk[i] = _itk[i] = _btk[i] = NO;
 		_gd[i] = YES;
 	}
-#define	CWHITE	" \f\t\n"
-	for (sp = CWHITE; *sp; sp++)	/* white space chars */
+
+	/* white space chars */
+	for (sp = " \f\t\n"; *sp; sp++) {
 		_wht[*sp] = YES;
-#define	CTOKEN	" \t\n\"'#()[]{}=-+%*/&|^~!<>;,.:?"
-	for (sp = CTOKEN; *sp; sp++)	/* token ending chars */
+	}
+
+	/* token ending chars */
+	for (sp = " \t\n\"'#()[]{}=-+%*/&|^~!<>;,.:?"; *sp; sp++) {
 		_etk[*sp] = YES;
-#define	CINTOK	"ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz0123456789"
-	for (sp = CINTOK; *sp; sp++)	/* valid in-token chars */
+	}
+
+	/* valid in-token chars */
+	for (sp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz0123456789"; *sp; sp++) {
 		_itk[*sp] = YES;
-#define	CBEGIN	"ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz"
-	for (sp = CBEGIN; *sp; sp++)	/* token starting chars */
+	}
+
+	/* token starting chars */
+	for (sp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz"; *sp; sp++) {
 		_btk[*sp] = YES;
-#define	CNOTGD	",;"
-	for (sp = CNOTGD; *sp; sp++)	/* invalid after-function chars */
+	}
+
+	/* invalid after-function chars */
+	for (sp = ",;"; *sp; sp++) {
 		_gd[*sp] = NO;
+	}
 }
 
 /*
@@ -205,8 +211,7 @@ find_entries(char *file)
 					break;
 				}
 			}
-#define	LISPCHR	";(["
-/* lisp */		if (strchr(LISPCHR, c)) {
+/* lisp */		if (strchr(";([", c)) {
 				l_entries();
 				return;
 			}
