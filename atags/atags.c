@@ -37,6 +37,7 @@ static char fbsdid[] = "$FreeBSD: release/10.0.0/usr.bin/ctags/ctags.c 216370 20
 
 #include <err.h>
 #include <limits.h>
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
