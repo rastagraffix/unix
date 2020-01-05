@@ -5,10 +5,12 @@ invert \- print text lines in reversed order
 .B invert
 .SH DESCRIPTION
 .B invert
-consumes a stream of text lines from the standard input, then disgorges
+consumes a stream of text lines from the standard input, then prints
 them to the standard output in the reversed order of which they were read.
-.PP
-The maximum size of the input stream is determined by the capacity
+.SH BUGS
+The number of lines
+.B invert
+can process is limited by the size
 of
 .BR sed 's
 hold space.
