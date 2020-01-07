@@ -1,0 +1,9 @@
+Some mostly irreverent UNIX tools.
+----------------------------------
+
+atags		ctags(1) hacked to output in a format compatible
+		with the Plan 9 plumber.
+
+backup		Simple cyclic remote dumps over ssh.
+
+invert		Stand a file on its head, crudely.
