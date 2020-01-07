@@ -41,7 +41,6 @@ __FBSDID("$FreeBSD: release/10.0.0/usr.bin/ctags/yacc.c 216370 2010-12-11 08:32:
 #include <stdio.h>
 
 #include "atags.h"
-#include "atags.h"
 
 /*
  * y_entries:

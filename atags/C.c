@@ -41,7 +41,6 @@ __FBSDID("$FreeBSD: release/10.0.0/usr.bin/ctags/C.c 216370 2010-12-11 08:32:16Z
 #include <string.h>
 
 #include "atags.h"
-#include "atags.h"
 
 static int	func_entry(void);
 static void	hash_entry(void);

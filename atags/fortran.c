@@ -42,7 +42,6 @@ __FBSDID("$FreeBSD: release/10.0.0/usr.bin/ctags/fortran.c 216370 2010-12-11 08:
 #include <string.h>
 
 #include "atags.h"
-#include "atags.h"
 
 static void takeprec(void);
 
